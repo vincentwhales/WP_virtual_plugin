@@ -53,13 +53,12 @@ function wvppl_pre_get_posts( $query ) {
 	$wordpress_plugins = get_query_var( 'wordpress_plugins' );
     
 	// add meta_query elements
-	if( !empty( $wordpress_plugins ) && $wordpress_plugins==1 ){ ?>
-<?php
-        require_once $_SERVER['DOCUMENT_ROOT'].'/wp-load.php';
-        require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        $all_plugins = get_plugins();
-        echo htmlspecialchars(json_encode($all_plugins, JSON_UNESCAPED_SLASHES)); ?>
-<?php die();
+	if( !empty( $wordpress_plugins ) && $wordpress_plugins==1 ){
+		require_once $_SERVER['DOCUMENT_ROOT'].'/wp-load.php';
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		$all_plugins = get_plugins();
+		echo json_encode($all_plugins, JSON_UNESCAPED_SLASHES);
+		die();
 	}
 }
 add_action( 'pre_get_posts', 'wvppl_pre_get_posts', 1 );
