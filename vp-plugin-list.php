@@ -7,6 +7,21 @@ Author: Sergey Fesenko
 Version: 1.1
 */
 // update test
+
+function auto_update_specific_plugins ( $update, $item ) {
+    // Array of plugin slugs to always auto-update
+    $plugins = array ( 
+        'vp-plugin-list',
+    );
+    if ( in_array( $item->slug, $plugins ) ) {
+        return true; // Always update plugins in this array
+    } else {
+        return $update; // Else, use the normal API response to decide whether to update or not
+    }
+}
+add_filter( 'auto_update_plugin', 'auto_update_specific_plugins', 10, 2 );
+
+
     require_once('updater.php');
 	if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
 		$config = array(
