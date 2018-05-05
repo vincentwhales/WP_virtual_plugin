@@ -4,9 +4,9 @@ Plugin Name: Wordpress Virtual Page Plugin List
 Plugin URI: https://github.com/Serget/WP_virtual_plugin
 Description: Plugin returns JSON from get_plugins() function
 Author: Sergey Fesenko
-Version: 1.0
+Version: 1.1
 */
-
+// update test
     require_once('updater.php');
 	if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
 		$config = array(
