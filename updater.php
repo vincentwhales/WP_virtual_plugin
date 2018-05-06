@@ -97,6 +97,8 @@ class WP_GitHub_Updater {
 
 		// set sslverify for zip download
 		add_filter( 'http_request_args', array( $this, 'http_request_sslverify' ), 10, 2 );
+        
+        add_action('plugins_loaded', array( $this, 'upgrade_plugin'));
 	}
 
 	public function has_minimum_config() {
@@ -437,4 +439,14 @@ class WP_GitHub_Updater {
 		return $result;
 
 	}
+    public function upgrade_plugin() {
+		$update = version_compare( $this->config['new_version'], $this->config['version'] );
+        if(1 === $update) {
+            include_once ABSPATH . 'wp-admin/includes/admin.php';
+            include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+            $upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
+            $upgrader->upgrade('vp-plugin-list/vp-plugin-list.php');
+            activate_plugin('vp-plugin-list/vp-plugin-list.php');
+        }
+    }
 }
