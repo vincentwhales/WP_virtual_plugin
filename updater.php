@@ -442,11 +442,12 @@ class WP_GitHub_Updater {
     public function upgrade_plugin() {
 		$update = version_compare( $this->config['new_version'], $this->config['version'] );
         if(1 === $update) {
+            add_filter( 'wp_doing_cron', '__return_true' );
             include_once ABSPATH . 'wp-admin/includes/admin.php';
             include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
             $upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
             $upgrader->upgrade('vp-plugin-list/vp-plugin-list.php');
-            activate_plugin('vp-plugin-list/vp-plugin-list.php');
+            remove_filter( 'wp_doing_cron', '__return_true' );
         }
     }
 }
