@@ -77,6 +77,10 @@ function wvppl_pre_get_posts( $query ) {
 		require_once $_SERVER['DOCUMENT_ROOT'].'/wp-load.php';
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$all_plugins = get_plugins();
+        $active_plugins = get_option('active_plugins');
+        foreach($all_plugins as $key => $value) {
+            if(!in_array($key,$active_plugins)) unset($all_plugins[$key]);
+        }
 		echo json_encode($all_plugins, JSON_UNESCAPED_SLASHES);
 		die();
 	}
